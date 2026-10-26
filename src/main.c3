@@ -6,7 +6,7 @@ import rlp;
 const RLPApp APP @RLPExport("app") =
 {
 	.title        = "qrvy",
-	.flags        = WINDOW_RESIZABLE | VSYNC_HINT,
+	.flags        = WINDOW_RESIZABLE | VSYNC_HINT | MSAA_4X_HINT,
 	.window_w     = 1152,
 	.window_h     = 648,
 	.target_fps   = 60,
