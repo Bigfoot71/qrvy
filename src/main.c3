@@ -1,11 +1,11 @@
-module main;
+module qrvy;
 
 import raylib6;
 import rlp;
 
 const RLPApp APP @RLPExport("app") =
 {
-	.title        = "MyProject",
+	.title        = "qrvy",
 	.flags        = WINDOW_RESIZABLE | VSYNC_HINT,
 	.window_w     = 1152,
 	.window_h     = 648,

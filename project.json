@@ -14,18 +14,18 @@
 
   "targets": {
     "default": {
-      "name": "MyProject",
+      "name": "qrvy",
       "type": "executable",
       "output": "build/default"
     },
     "linux-x64-debug": {
-      "name": "MyProject",
+      "name": "qrvy",
       "type": "executable",
       "target": "linux-x64",
       "output": "build/linux-x64-debug"
     },
     "linux-x64-release": {
-      "name": "MyProject",
+      "name": "qrvy",
       "type": "executable",
       "target": "linux-x64",
       "output": "build/linux-x64-release",
@@ -35,13 +35,13 @@
       "opt": "O2"
     },
     "windows-x64-debug": {
-      "name": "MyProject",
+      "name": "qrvy",
       "type": "executable",
       "target": "windows-x64",
       "output": "build/windows-x64-debug"
     },
     "windows-x64-release": {
-      "name": "MyProject",
+      "name": "qrvy",
       "type": "executable",
       "target": "windows-x64",
       "output": "build/windows-x64-release",
