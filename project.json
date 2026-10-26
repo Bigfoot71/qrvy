@@ -1,0 +1,85 @@
+{
+  "authors": [ "John Doe <john.doe@example.com>" ],
+  "version": "0.1.0",
+
+  "dependency-search-paths": [ "lib" ],
+  "dependencies": [ "raylib6", "rlp" ],
+  "sources": [ "src/**" ],
+  "build-dir": "build",
+
+  "debug-info": "full",
+  "cpu": "generic",
+  "safe": true,
+  "opt": "O0",
+
+  "targets": {
+    "default": {
+      "name": "MyProject",
+      "type": "executable",
+      "output": "build/default"
+    },
+    "linux-x64-debug": {
+      "name": "MyProject",
+      "type": "executable",
+      "target": "linux-x64",
+      "output": "build/linux-x64-debug"
+    },
+    "linux-x64-release": {
+      "name": "MyProject",
+      "type": "executable",
+      "target": "linux-x64",
+      "output": "build/linux-x64-release",
+      "link-args": [ "-s" ],
+      "debug-info": "none",
+      "safe": false,
+      "opt": "O2"
+    },
+    "windows-x64-debug": {
+      "name": "MyProject",
+      "type": "executable",
+      "target": "windows-x64",
+      "output": "build/windows-x64-debug"
+    },
+    "windows-x64-release": {
+      "name": "MyProject",
+      "type": "executable",
+      "target": "windows-x64",
+      "output": "build/windows-x64-release",
+      "link-args": [ "/OPT:REF" ],
+      "debug-info": "none",
+      "safe": false,
+      "opt": "O2"
+    },
+    "web-debug": {
+      "name": "index.html",
+      "type": "executable",
+      "target": "emscripten",
+      "output": "build/web-debug",
+      "link-args":  [
+        "--preload-file assets@assets",
+        "-sUSE_GLFW=3",
+        "-sEXPORTED_RUNTIME_METHODS=['HEAPF32']",
+        "--shell-file src/minshell.html"
+      ]
+    },
+    "web-release": {
+      "name": "index.html",
+      "type": "executable",
+      "target": "emscripten",
+      "output": "build/web-release",
+      "link-args":  [ 
+        "--preload-file assets@assets",
+        "-sUSE_GLFW=3",
+        "-sEXPORTED_RUNTIME_METHODS=['HEAPF32']",
+        "--shell-file src/minshell.html",
+        "-O3",
+        "-s",
+        "-g0"
+      ],
+      "debug-info": "none",
+      "safe": false
+    }
+  }
+}
+
+
