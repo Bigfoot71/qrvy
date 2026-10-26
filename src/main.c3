@@ -25,8 +25,23 @@ fn void tick() @RLPExport("tick")
 {
 	float dt = rl::get_frame_time();
 
+	Point[] points = {
+		{ 0.0f, 0.0f, 0.0f },
+		{ 0.5f, 0.2f, 0.0f },
+		{ 1.0f, 1.0f, 0.0f },
+	};
+
 	rl::@drawing()
 	{
 		rl::clear_background(rl::DARKGRAY);
+
+		RLRectangle screen = {
+			0,
+			0,
+			(float)rl::get_screen_width(),
+			(float)rl::get_screen_height(),
+		};
+
+		curve_draw(points, screen, 4.0f, rl::RED);
 	};
 }
