@@ -26,9 +26,9 @@ fn void tick() @RLPExport("tick")
 	float dt = rl::get_frame_time();
 
 	Point[] points = {
-		{ 0.0f, 0.0f, 0.0f },
-		{ 0.5f, 0.2f, 0.0f },
-		{ 1.0f, 1.0f, 0.0f },
+		{ 0.0f, 0.0f, -0.5f },
+		{ 0.5f, 0.2f, +0.5f },
+		{ 1.0f, 1.0f, -0.5f },
 	};
 
 	rl::@drawing()
@@ -42,6 +42,11 @@ fn void tick() @RLPExport("tick")
 			(float)rl::get_screen_height(),
 		};
 
-		curve_draw(points, screen, 4.0f, rl::RED);
+		curve_draw(points, screen, 2.0f, rl::RED);
+
+		foreach (p : points)
+		{
+			rl::draw_circle_v(p.xy, 8.0f, rl::BLUE);
+		}
 	};
 }
