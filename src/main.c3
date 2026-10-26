@@ -46,7 +46,7 @@ fn void tick() @RLPExport("tick")
 
 		foreach (p : points)
 		{
-			rl::draw_circle_v(p.xy, 8.0f, rl::BLUE);
+			rl::draw_circle_v(p.transform(screen), 4.0f, rl::BLUE);
 		}
 	};
 }
