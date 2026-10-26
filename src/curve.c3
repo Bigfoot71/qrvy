@@ -64,7 +64,7 @@ fn Vec2 to_screen(Vec2 p, RLRectangle dest) @local @inline
 	return math::fma((Vec2){ p.x, 1.0f - p.y }, dest.size, dest.origin);
 }
 
-fn float tangent(Point[] pts, int i) @local
+fn float tangent(Point[] pts, int i) @private
 {
 	Vec2 p = pts[i].xy;
 	float m;
