@@ -57,7 +57,6 @@
       "output": "build/web-debug",
       "link-args":  [
         "--shell-file src/minshell.html",
-        "--preload-file assets@assets",
         "-sEXPORTED_RUNTIME_METHODS=['HEAPF32']",
         "-sINITIAL_MEMORY=134217728",
         "-sUSE_GLFW=3"
@@ -70,7 +69,6 @@
       "output": "build/web-release",
       "link-args":  [ 
         "--shell-file src/minshell.html",
-        "--preload-file assets@assets",
         "-sEXPORTED_RUNTIME_METHODS=['HEAPF32']",
         "-sINITIAL_MEMORY=134217728",
         "-sUSE_GLFW=3",
