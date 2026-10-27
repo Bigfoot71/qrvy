@@ -513,7 +513,7 @@ fn void draw_controls(RLRectangle c)
 
 	// Grid resolution
 	RLRectangle r_grid = { x + label_w, y, w - label_w, ROW_H };
-	if (rg::spinner(r_grid, "Grid", &ctx.grid_value, GRID_MIN, GRID_MAX, ctx.grid_editing) != 0)
+	if (rg::spinner(r_grid, "Grid ", &ctx.grid_value, GRID_MIN, GRID_MAX, ctx.grid_editing) != 0)
 	{
 		ctx.grid_editing = !ctx.grid_editing;
 	}
