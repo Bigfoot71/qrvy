@@ -90,10 +90,10 @@ fn void preview_draw(float w, float h)
 {
 	Preview* p = &ctx.preview;
 
-	float black = math::clamp(p.fade * 2.0f, 0.0f, 1.0f);
-	float anim  = math::clamp(p.fade * 2.0f - 1.0f, 0.0f, 1.0f);
+	float fade = math::clamp(p.fade * 2.0f, 0.0f, 1.0f);
+	float anim = math::clamp(p.fade * 2.0f - 1.0f, 0.0f, 1.0f);
 
-	rl::draw_rectangle(0, 0, (int)w, (int)h, rl::BLACK.fade(black));
+	rl::draw_rectangle(0, 0, (int)w, (int)h, (RLColor){0, 34, 43, 255}.fade(fade)); //< color same as BACKGROUND_COLOR of raygui's cyber theme
 
 	if (anim <= 0.0f) return;
 
@@ -128,6 +128,11 @@ uniform vec2  uResolution;
 `;
 
 const String PREVIEW_SCENE @local = `
+
+// Constants (inspired from raygui's cyber theme)
+const vec3 BACKGROUND = vec3(0.00, 0.016, 0.024);
+const vec3 FLOOR      = vec3(0.00, 0.064, 0.096);
+const vec3 LINE       = vec3(1.00, 0.114, 0.000);
 
 // Animation state
 float g_p; // linear progress, 0..1
@@ -218,7 +223,7 @@ void main()
 	}
 
 	// Shading
-	vec3 col = mix(vec3(0.015, 0.02, 0.05), vec3(0.07, 0.05, 0.12), uv.y);
+	vec3 col = mix(BACKGROUND * 0.5, BACKGROUND, uv.y);
 	col *= 1.0 - 0.7 * dot(pxc, pxc);
 
 	vec3 l = normalize(vec3(-0.5, 0.9, -0.6));
@@ -243,7 +248,7 @@ void main()
 		// Edges lines
 		float w    = 0.03 + 0.012 * tf;
 		float ends = 1.0 - smoothstep(0.0, w, abs(abs(pos.x) - 2.6));
-		vec3 base  = vec3(0.09, 0.10, 0.15) + vec3(0.25, 0.45, 0.60) * ends;
+		vec3 base  = FLOOR + LINE * ends;
 
 		float diff = saturate(l.y) * sphereShadow(pos, l, c, 0.5);
 		vec3 lit   = base * (0.15 + 0.85 * diff);
