@@ -105,9 +105,14 @@ fn void quit() @RLPExport("quit")
 
 fn void tick() @RLPExport("tick")
 {
+	static bool ui_was_locked;
+
 	float w = (float)rl::get_screen_width();
 	float h = (float)rl::get_screen_height();
 	Layout l = compute_layout(w, h);
+
+	bool locked = ctx.preview.active || ctx.drag != Drag.NONE || (ui_was_locked && (rl::is_mouse_button_down(LEFT) || rl::is_mouse_button_released(LEFT)));
+	ui_was_locked = locked;
 
 	if (ctx.preview.active) { preview_update(rl::get_frame_time()); }
 	else                    { update(l); }
@@ -116,18 +121,15 @@ fn void tick() @RLPExport("tick")
 	{
 		rl::clear_background(theme(RGGuiProperty.BACKGROUND_COLOR));
 
-		bool locked = ctx.preview.active;
 		if (locked) rg::lock();
 
 		draw_code(l.code);
 		draw_graph(l.graph, l.plot);
 		draw_controls(l.ctrl);
 
-		if (locked)
-		{
-			rg::unlock();
-			preview_draw(w, h);
-		}
+		if (locked) rg::unlock();
+
+		if (ctx.preview.active) preview_draw(w, h);
 	};
 }
 
