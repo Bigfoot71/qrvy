@@ -42,7 +42,7 @@ fn int main(String[] args) @winmain
 	init();
 
 	$if env::WASM:
-		emscripten_set_main_loop(&tick, APP.target_fps, 1);
+		emscripten_set_main_loop(&tick, 0, 1);
 	$else
 		rl::set_target_fps(APP.target_fps);
 		while (!rl::window_should_close()) tick();
