@@ -50,7 +50,7 @@ fn int main(String[] args) @winmain
 
 	quit();
 
-	rl::close_audio_device();
+	if (APP.audio_device) rl::close_audio_device();
 	rl::close_window();
 
 	return 0;
