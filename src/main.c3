@@ -9,6 +9,8 @@ import rlp;
 // Constants
 // ================================
 
+const String EASE_NAME = "ease_custom";   // name of the generated GLSL function
+
 const int   MAX_POINTS = 32;
 const int   GRID_MIN   = 2;
 const int   GRID_MAX   = 32;
@@ -55,6 +57,9 @@ struct Context
 	// Generated GLSL (empty by default)
 	DString           code;
 	RLVector2         code_scroll;
+
+	// Animation (see preview.c3)
+	Preview           preview;
 }
 
 Context ctx = {
@@ -95,22 +100,35 @@ fn void init() @RLPExport("init")
 
 fn void quit() @RLPExport("quit")
 {
+	preview_free();
 	ctx.code.free();
 }
 
 fn void tick() @RLPExport("tick")
 {
-	Layout l = compute_layout((float)rl::get_screen_width(), (float)rl::get_screen_height());
+	float w = (float)rl::get_screen_width();
+	float h = (float)rl::get_screen_height();
+	Layout l = compute_layout(w, h);
 
-	update(l);
+	if (ctx.preview.active) { preview_update(rl::get_frame_time()); }
+	else                    { update(l); }
 
 	rl::@drawing()
 	{
 		rl::clear_background(theme(RGGuiProperty.BACKGROUND_COLOR));
 
+		bool locked = ctx.preview.active;
+		if (locked) rg::lock();
+
 		draw_code(l.code);
 		draw_graph(l.graph, l.plot);
 		draw_controls(l.ctrl);
+
+		if (locked)
+		{
+			rg::unlock();
+			preview_draw(w, h);
+		}
 	};
 }
 
@@ -187,6 +205,13 @@ fn void reset()
 	ctx.drag = Drag.NONE;
 	ctx.drag_idx = -1;
 	ctx.code.clear();
+	ctx.code_scroll = { 0.0f, 0.0f };
+}
+
+fn void generate()
+{
+	ctx.code.clear();
+	curve_to_glsl(&ctx.code, ctx.points[:ctx.point_count], EASE_NAME);
 	ctx.code_scroll = { 0.0f, 0.0f };
 }
 
@@ -494,14 +519,11 @@ fn void draw_controls(RLRectangle c)
 	}
 	y += ROW_H + GAP;
 
-	// Generation
-	RLRectangle r_generate = { x, y, w, ROW_H };
-	if (rg::button(r_generate, "Generate GLSL") != 0)
-	{
-		ctx.code.clear();
-		curve_to_glsl(&ctx.code, ctx.points[:ctx.point_count], "ease_custom");
-		ctx.code_scroll = { 0.0f, 0.0f };
-	}
+	// Generate / Preview
+	RLRectangle r_generate = { x, y, half, ROW_H };
+	RLRectangle r_preview  = { x + half + GAP, y, half, ROW_H };
+	if (rg::button(r_generate, "Generate GLSL") != 0) generate();
+	if (rg::button(r_preview, "Preview") != 0) preview_open();
 	y += ROW_H + GAP;
 
 	// Reset / Copy
