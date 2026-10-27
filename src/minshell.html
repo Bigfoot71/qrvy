@@ -5,28 +5,37 @@
 	<meta charset="utf-8">
 	<title>qrvy</title>
 	<style>
-		html, body {
+		body {
 			margin: 0;
-			width: 100%;
-			height: 100%;
-			background: #050505;
+			background: #06162dff;
 			overflow: hidden;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh
+		}
+
+		.canvas-container {
+			border-radius: 16px;
+			overflow: hidden;
+			display: inline-block;
 		}
 
 		#canvas {
 			display: block;
-			width: 100vw !important;
-			height: 100vh !important;
 			outline: none;
-			/* Optional: Keep pixel art sharp if scaling occurs */
-			image-rendering: pixelated;
-			image-rendering: crisp-edges;
 		}
 	</style>
 </head>
 
 <body>
-	<canvas id="canvas" style="outline:none" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+	<div class="canvas-container">
+		<canvas
+			id="canvas"
+			oncontextmenu="event.preventDefault()"
+			tabindex="-1">
+		</canvas>
+	</div>
 	<script>
 		var Module = {
 			canvas: document.getElementById('canvas'),
