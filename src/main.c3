@@ -15,7 +15,6 @@ const int   MAX_POINTS = 32;
 const int   GRID_MIN   = 2;
 const int   GRID_MAX   = 32;
 
-const int   TEXT_SIZE  = 10;      // UI + code text size
 const float ROW_H      = 28.0f;
 const float GAP        = 6.0f;
 const float MARGIN     = 12.0f;
