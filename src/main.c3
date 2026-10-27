@@ -92,8 +92,7 @@ const RLPApp APP @RLPExport("app") =
 
 fn void init() @RLPExport("init")
 {
-	rg::set_style(RGGuiControl.DEFAULT, RGGuiProperty.TEXT_SIZE, TEXT_SIZE);
-
+	rg::load_style_from_memory($embed("../embed/style_cyber.rgs"));
 	ctx.code.init(mem);
 	reset();
 }
