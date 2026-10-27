@@ -18,8 +18,8 @@ fn void curve_to_glsl(DString* s, Point[] pts, String name)
 		Vec2 p1 = pts[i + 1].xy;
 		float dx = p1.x - p0.x;
 		float dy = p1.y - p0.y;
-		float ma = tangent(pts, i);
-		float mb = tangent(pts, i + 1);
+		float ma = curve_tangent(pts, i);
+		float mb = curve_tangent(pts, i + 1);
 
 		float a = -2.0f * dy + dx * (ma + mb);
 		float b =  3.0f * dy - dx * (2.0f * ma + mb);

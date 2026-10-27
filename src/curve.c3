@@ -27,8 +27,8 @@ fn void curve_draw(Point[] points, RLRectangle dest, float thickness, RLColor co
 		Point a = points[i    ];
 		Point b = points[i + 1];
 
-		float ma = tangent(points, i    );
-		float mb = tangent(points, i + 1);
+		float ma = curve_tangent(points, i    );
+		float mb = curve_tangent(points, i + 1);
 
 		Vec2 sa = a.transform(dest);
 		Vec2 sb = b.transform(dest);
@@ -46,25 +46,7 @@ fn void curve_draw(Point[] points, RLRectangle dest, float thickness, RLColor co
 	rl::gl_end();
 }
 
-// ================================
-// Public: Point Methods
-// ================================
-
-fn Vec2 Point.transform(self, RLRectangle dest) @inline
-{
-	return to_screen(self.xy, dest);
-}
-
-// ================================
-// Local: Curve Functions
-// ================================
-
-fn Vec2 to_screen(Vec2 p, RLRectangle dest) @local @inline
-{
-	return math::fma((Vec2){ p.x, 1.0f - p.y }, dest.size, dest.origin);
-}
-
-fn float tangent(Point[] pts, int i) @private
+fn float curve_tangent(Point[] pts, int i)
 {
 	Vec2 p = pts[i].xy;
 	float m;
@@ -96,6 +78,24 @@ fn float tangent(Point[] pts, int i) @private
 
 	float z = math::clamp(pts[i].z, -1.0f, 1.0f);
 	return m * (1.0f - z);
+}
+
+// ================================
+// Public: Point Methods
+// ================================
+
+fn Vec2 Point.transform(self, RLRectangle dest) @inline
+{
+	return to_screen(self.xy, dest);
+}
+
+// ================================
+// Local: Curve Functions
+// ================================
+
+fn Vec2 to_screen(Vec2 p, RLRectangle dest) @local @inline
+{
+	return math::fma((Vec2){ p.x, 1.0f - p.y }, dest.size, dest.origin);
 }
 
 fn Vec2 bezier_eval(Vec2 a, Vec2 b, float ma, float mb, float t) @local @inline

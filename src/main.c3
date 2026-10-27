@@ -288,7 +288,7 @@ fn float auto_slope(int i)
 {
 	float z = ctx.points[i].z;
 	ctx.points[i].z = 0.0f;
-	float m = tangent(ctx.points[:ctx.point_count], i);
+	float m = curve_tangent(ctx.points[:ctx.point_count], i);
 	ctx.points[i].z = z;
 	return m;
 }
@@ -297,7 +297,7 @@ fn float auto_slope(int i)
 fn Vec2 handle_pos(RLRectangle plot, int i)
 {
 	Vec2 p = ctx.points[i].transform(plot);
-	float m = tangent(ctx.points[:ctx.point_count], i);
+	float m = curve_tangent(ctx.points[:ctx.point_count], i);
 	float side = i == ctx.point_count - 1 ? -1.0f : 1.0f;
 	float inv = 1.0f / math::sqrt(1.0f + m * m);
 	return { p.x + side * inv * HANDLE_LEN, p.y - side * m * inv * HANDLE_LEN };
@@ -341,7 +341,7 @@ fn void drag_handle(RLRectangle plot, Vec2 m)
 	float sx = math::max((m.x - p.x) * side, 4.0f);
 	float sy = -(m.y - p.y) * side;
 
-	// tangent() returns auto * (1 - z)  =>  z = 1 - slope / auto
+	// curve_tangent() returns auto * (1 - z)  =>  z = 1 - slope / auto
 	ctx.points[i].z = math::clamp(1.0f - (sy / sx) / ma, -1.0f, 1.0f);
 }
 
