@@ -29,7 +29,10 @@ extern fn void quit() @cname("rlp_quit");
 
 fn int main(String[] args) @winmain
 {
-	$if !env::WASM:
+	$if env::WASM:
+		const RLConfigFlag WEB_SUPPORTED = VSYNC_HINT | WINDOW_RESIZABLE | WINDOW_TRANSPARENT | MSAA_4X_HINT;
+		rl::set_config_flags(APP.flags & WEB_SUPPORTED);
+	$else
 		rl::set_config_flags(APP.flags);
 	$endif
 
