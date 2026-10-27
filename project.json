@@ -56,10 +56,11 @@
       "target": "emscripten",
       "output": "build/web-debug",
       "link-args":  [
+        "--shell-file src/minshell.html",
         "--preload-file assets@assets",
-        "-sUSE_GLFW=3",
         "-sEXPORTED_RUNTIME_METHODS=['HEAPF32']",
-        "--shell-file src/minshell.html"
+        "-sINITIAL_MEMORY=134217728",
+        "-sUSE_GLFW=3"
       ]
     },
     "web-release": {
@@ -68,18 +69,17 @@
       "target": "emscripten",
       "output": "build/web-release",
       "link-args":  [ 
-        "--preload-file assets@assets",
-        "-sUSE_GLFW=3",
-        "-sEXPORTED_RUNTIME_METHODS=['HEAPF32']",
         "--shell-file src/minshell.html",
+        "--preload-file assets@assets",
+        "-sEXPORTED_RUNTIME_METHODS=['HEAPF32']",
+        "-sINITIAL_MEMORY=134217728",
+        "-sUSE_GLFW=3",
         "-O3",
-        "-s",
-        "-g0"
+        "-g0",
+        "-s"
       ],
       "debug-info": "none",
       "safe": false
     }
   }
 }
-
-
