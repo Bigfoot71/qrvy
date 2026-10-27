@@ -164,6 +164,21 @@ float sphereShadow(vec3 pos, vec3 l, vec3 c, float r)
 	return tca > 0.0 ? smoothstep(r * 0.6, r * 1.6, d) : 1.0;
 }
 
+float dither(vec2 pos)
+{
+    // http://www.iryoku.com/next-generation-post-processing-in-call-of-duty-advanced-warfare
+    const vec3 magic = vec3(0.06711056, 0.00583715, 52.9829189);
+    return fract(magic.z * fract(dot(pos, magic.xy)));
+}
+
+vec3 debanding(vec2 pos, vec3 color)
+{
+    const float dither_strength = 1.0 / 255.0;
+    float n = dither(pos.xy);
+    float d = (n - 0.5) * dither_strength;
+    return color + d;
+}
+
 void main()
 {
 	vec2 uv      = fragTexCoord;
@@ -277,6 +292,8 @@ void main()
 		float dd = length((q - vec2(g_p, g_e)) * S);
 		col = mix(col, pal(g_e), 1.0 - smoothstep(4.0, 5.5, dd));
 	}
+
+	col = debanding(gl_FragCoord.xy, col);
 
 	FRAG_COLOR = vec4(col, fragColor.a);
 }
