@@ -9,7 +9,7 @@ import rlp;
 // Constants
 // ================================
 
-const String EASE_NAME = "ease_custom";   // name of the generated GLSL function
+const String FUNC_NAME = "ease_custom";
 
 const int   MAX_POINTS = 32;
 const int   GRID_MIN   = 2;
@@ -70,8 +70,8 @@ Context ctx = {
 struct Layout
 {
 	RLRectangle code;
-	RLRectangle graph;   // square
-	RLRectangle plot;    // graph minus inner padding, square too
+	RLRectangle graph;
+	RLRectangle plot;
 	RLRectangle ctrl;
 }
 
@@ -86,6 +86,8 @@ const RLPApp APP @RLPExport("app") =
 	.window_w     = 1152,
 	.window_h     = 648,
 	.target_fps   = 60,
+	.exit_key     = NONE,
+	.log_level    = env::COMPILER_SAFE_MODE ? NONE : DEBUG,
 	.audio_device = false,
 };
 
@@ -211,7 +213,7 @@ fn void reset()
 fn void generate()
 {
 	ctx.code.clear();
-	curve_to_glsl(&ctx.code, ctx.points[:ctx.point_count], EASE_NAME);
+	curve_to_glsl(&ctx.code, ctx.points[:ctx.point_count], FUNC_NAME);
 	ctx.code_scroll = { 0.0f, 0.0f };
 }
 

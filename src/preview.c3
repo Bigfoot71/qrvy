@@ -38,7 +38,7 @@ fn bool preview_open()
 	@pool()
 	{
 		DString fs = dstring::temp();
-		fs.appendf("#define EASE %s\n", EASE_NAME);
+		fs.appendf("#define EASE %s\n", FUNC_NAME);
 		fs.append(PREVIEW_HEAD);
 		fs.append(ctx.code.str_view());
 		fs.append(PREVIEW_SCENE);
